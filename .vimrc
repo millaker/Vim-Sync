@@ -3,6 +3,7 @@
 call plug#begin()
 Plug 'preservim/NERDTree'
 Plug 'jiangmiao/auto-pairs'
+Plug 'NLKNguyen/papercolor-theme'
 call plug#end()
 "Basic settings -------{{{
 set tabstop=4
@@ -10,9 +11,8 @@ set shiftwidth=4
 set softtabstop=4
 set expandtab
 set t_Co=256
-let g:molokai_orginal = 1
-let g:rehash256 = 1
-colorscheme molokai
+colorscheme PaperColor
+set background=dark
 set number
 set mouse=a
 set so=15 "scrolloff
