@@ -4,6 +4,7 @@ call plug#begin()
 Plug 'preservim/NERDTree'
 Plug 'jiangmiao/auto-pairs'
 Plug 'NLKNguyen/papercolor-theme'
+Plug 'tomasiser/vim-code-dark'
 call plug#end()
 "Basic settings -------{{{
 set tabstop=4
@@ -11,8 +12,8 @@ set shiftwidth=4
 set softtabstop=4
 set expandtab
 set t_Co=256
-colorscheme PaperColor
-set background=dark
+set t_ut=
+colorscheme codedark
 set number
 set mouse=a
 set so=15 "scrolloff
@@ -85,4 +86,4 @@ augroup END
 "}}}
 
 "Change vim MatchParen settings to show cursor
-hi MatchParen ctermfg=208 ctermbg=bg
+hi MatchParen ctermfg=180 ctermbg=bg
