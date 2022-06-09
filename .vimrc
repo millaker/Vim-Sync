@@ -2,7 +2,7 @@
 
 call plug#begin()
 Plug 'preservim/NERDTree'
-Plug 'jiangmiao/auto-pairs'
+Plug 'Raimondi/delimitMate'
 Plug 'NLKNguyen/papercolor-theme'
 Plug 'tomasiser/vim-code-dark'
 call plug#end()
@@ -13,7 +13,7 @@ set softtabstop=4
 set expandtab
 set t_Co=256
 set t_ut=
-colorscheme codedark
+colorscheme papercolor
 set number
 set mouse=a
 set so=15 "scrolloff
@@ -27,6 +27,7 @@ let mapleader = " "
 set laststatus=2
 set clipboard=unnamed
 set statusline=%f%=\Char:\ %c,\Current:\ %l,\ Total:\ %L
+set tags=./tags,tags;$HOME
 "}}}
 
 "Keymappings -- InsertMode------{{{
@@ -86,4 +87,5 @@ augroup END
 "}}}
 
 "Change vim MatchParen settings to show cursor
-hi MatchParen ctermfg=180 ctermbg=bg
+hi MatchParen ctermfg=Yellow ctermbg=Green
+
