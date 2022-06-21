@@ -2,7 +2,6 @@
 call plug#begin()
 Plug 'preservim/NERDTree'
 Plug 'millaker/auto-pairs'
-Plug 'NLKNguyen/papercolor-theme'
 Plug 'tomasiser/vim-code-dark'
 call plug#end()
 
