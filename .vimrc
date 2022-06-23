@@ -29,11 +29,11 @@ set tags=./tags,tags;$HOME
 
 "Keymappings -- InsertMode
 inoremap jj <esc>
+imap <C-v> jj"+p
 
 "Keymappings -- NormalMode
-"Makes enter in normal mode add a newline but wont go in to insert mode
-nnoremap <Enter> o<esc>
-nnoremap <leader><Enter> O<esc>
+nnoremap <C-v> "+p
+
 "Navigating in normal mode ( HEAD and LAST)
 nnoremap H 0
 nnoremap L $
@@ -81,3 +81,14 @@ nmap <silent> gd <Plug>(coc-definition)
 nmap <silent> gy <Plug>(coc-type-definition)
 nmap <silent> gi <Plug>(coc-implementation)
 nmap <silent> gr <Plug>(coc-references)
+
+"Cycle through diagnostics
+nmap <silent> [g <Plug>(coc-diagnostic-prev)
+nmap <silent> ]g <Plug>(coc-diagnostic-next)
+
+"Use ctrl space to trigger suggestions
+if has('nvim')
+  inoremap <silent><expr> <c-space> coc#refresh()
+else
+  inoremap <silent><expr> <c-@> coc#refresh()
+endif
