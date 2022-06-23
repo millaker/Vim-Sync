@@ -3,6 +3,7 @@ call plug#begin()
 Plug 'preservim/NERDTree'
 Plug 'millaker/auto-pairs'
 Plug 'tomasiser/vim-code-dark'
+Plug 'neoclide/coc.nvim'
 call plug#end()
 
 "Basic settings
@@ -59,3 +60,24 @@ autocmd BufWinEnter * if getcmdwintype() == '' | silent NERDTreeMirror | endif
 "Change vim MatchParen settings to show cursor
 hi MatchParen ctermfg=Yellow ctermbg=Green
 
+"Coc settings
+"Coc <tab> completion
+inoremap <silent><expr> <TAB>
+      \ pumvisible() ? "\<C-n>" :
+      \ CheckBackspace() ? "\<TAB>" :
+      \ coc#refresh()
+inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
+
+function! CheckBackspace() abort
+  let col = col('.') - 1
+  return !col || getline('.')[col - 1]  =~# '\s'
+endfunction
+
+"Coc update time
+set updatetime=300
+
+" GoTo code navigation.
+nmap <silent> gd <Plug>(coc-definition)
+nmap <silent> gy <Plug>(coc-type-definition)
+nmap <silent> gi <Plug>(coc-implementation)
+nmap <silent> gr <Plug>(coc-references)

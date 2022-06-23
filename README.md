@@ -17,3 +17,14 @@ This repo is for syncing my own Vim setup between different devices.
 2. codedark
     colorscheme codedark
     set t_ut=
+
+## Coc Install guide
+1. Install nodejs 
+2. Run `sudo apt-get intsall npm`
+3. Run `sudo npm i -g yarn`
+4. Navigate to coc.nvim plugin folder
+5. Run `yarn install --ignore-engines`
+6. Open vim and run `:CocInstall coc-clangd`
+7. Run `:CocCommand clangd.install`
+8. Add additional settings to vimrc(tab completion, reaction time)
+**Vim must be at least v8.2**
