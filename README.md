@@ -27,4 +27,5 @@ This repo is for syncing my own Vim setup between different devices.
 6. Open vim and run `:CocInstall coc-clangd`
 7. Run `:CocCommand clangd.install`
 8. Add additional settings to vimrc(tab completion, reaction time)
+Useful server for coc: coc-clangd coc-rust-analyzer coc-pairs
 **Vim must be at least v8.2**
