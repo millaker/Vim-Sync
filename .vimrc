@@ -1,12 +1,13 @@
 "PlugIn
 call plug#begin()
 Plug 'preservim/NERDTree'
-Plug 'millaker/auto-pairs'
+"Plug 'millaker/auto-pairs'
 Plug 'tomasiser/vim-code-dark'
-Plug 'neoclide/coc.nvim'
+Plug 'neoclide/coc.nvim', {'branch': 'release'}
 call plug#end()
 
 "Basic settings
+filetype on
 set tabstop=4
 set shiftwidth=4
 set softtabstop=4
@@ -45,9 +46,14 @@ nnoremap smv :w<Enter>:source $MYVIMRC<Enter>
 "keymappings -- VisualMode
 vnoremap H 0
 vnoremap L $
+vmap <C-c> "+y
 
 "Autocmd
-au FileType make set expandtab!
+augroup vimrc_make
+    au!
+    au Filetype makefile set expandtab!
+augroup end
+
 "NERDTree setup
 " Start NERDTree. If a file is specified, move the cursor to its window.
 autocmd StdinReadPre * let s:std_in=1
@@ -92,3 +98,24 @@ if has('nvim')
 else
   inoremap <silent><expr> <c-@> coc#refresh()
 endif
+
+"Merge signcolumn with line numbers
+set signcolumn=number
+
+" Use K to show documentation in preview window.
+nnoremap <silent> <C-k> :call ShowDocumentation()<CR>
+
+function! ShowDocumentation()
+  if CocAction('hasProvider', 'hover')
+    call CocActionAsync('doHover')
+  else
+    call feedkeys('K', 'in')
+  endif
+endfunction
+
+" Symbol renaming.
+nmap <leader>rn <Plug>(coc-rename)
+
+" Map enter to indent correctly
+inoremap <silent><expr> <cr> pumvisible() ? coc#_select_confirm()
+				\: "\<C-g>u\<CR>\<c-r>=coc#on_enter()\<CR>"
