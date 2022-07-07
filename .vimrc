@@ -4,6 +4,8 @@ Plug 'preservim/NERDTree'
 "Plug 'millaker/auto-pairs'
 Plug 'tomasiser/vim-code-dark'
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
+Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
+Plug 'junegunn/fzf.vim'
 call plug#end()
 
 "Basic settings
@@ -25,25 +27,43 @@ set relativenumber
 let mapleader = " "
 set laststatus=2
 set clipboard=unnamed
-set statusline=%f%=\Char:\ %c,\Current:\ %l,\ Total:\ %L
 set tags=./tags,tags;$HOME
+
+set statusline=
+set statusline+=\ %f
+set statusline+=%=
+set statusline+=%#CursorColumn#
+set statusline+=\ %y
+set statusline+=\ %p%%
+set statusline+=\ %l:%c
+set statusline+=\ 
 
 "Keymappings -- InsertMode
 inoremap jj <esc>
 imap <C-v> jj"+p
 
 "Keymappings -- NormalMode
-nnoremap <C-v> "+p
+
+"Paste text in buffer
+nnoremap <C-v> "+p      
+
+"Open fuzzy finder
+nnoremap <C-p> :Files<CR>
+
+"Close current tab
+nnoremap <C-c> :tabclose<CR>
 
 "Navigating in normal mode ( HEAD and LAST)
 nnoremap H 0
 nnoremap L $
+
 "Toggle NERDTree
 nnoremap <C-n> :NERDTreeToggle<CR>
+
 "Source my .vimrc
 nnoremap smv :w<Enter>:source $MYVIMRC<Enter>
 
-"keymappings -- VisualMode
+"Keymappings -- VisualMode
 vnoremap H 0
 vnoremap L $
 vmap <C-c> "+y
@@ -119,3 +139,4 @@ nmap <leader>rn <Plug>(coc-rename)
 " Map enter to indent correctly
 inoremap <silent><expr> <cr> pumvisible() ? coc#_select_confirm()
 				\: "\<C-g>u\<CR>\<c-r>=coc#on_enter()\<CR>"
+
