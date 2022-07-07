@@ -38,12 +38,11 @@ set statusline+=\ %p%%
 set statusline+=\ %l:%c
 set statusline+=\ 
 
-"Keymappings -- InsertMode
+"---------------------Keymappings -- InsertMode------------------------------
 inoremap jj <esc>
 imap <C-v> jj"+p
 
-"Keymappings -- NormalMode
-
+"---------------------Keymappings -- Normal Mode------------------------------
 "Paste text in buffer
 nnoremap <C-v> "+p      
 
@@ -63,10 +62,19 @@ nnoremap <C-n> :NERDTreeToggle<CR>
 "Source my .vimrc
 nnoremap smv :w<Enter>:source $MYVIMRC<Enter>
 
-"Keymappings -- VisualMode
+"Open terminal 
+nnoremap <C-j> :bo term<CR>
+
+"---------------------Keymappings -- VisualMode-------------------------------
 vnoremap H 0
 vnoremap L $
 vmap <C-c> "+y
+
+"---------------------Keymappings -- Terminal-JobMode-------------------------
+"Enter terminal normal mode and scroll
+tmap <C-e> <C-w>N<C-e>
+tmap <C-y> <C-w>N<C-y>
+tmap <C-j> <C-d>
 
 "Autocmd
 augroup vimrc_make
@@ -80,6 +88,8 @@ autocmd StdinReadPre * let s:std_in=1
 autocmd VimEnter * NERDTree | if argc() > 0 || exists("s:std_in") | wincmd p | endif
 " Exit Vim if NERDTree is the only window remaining in the only tab.
 autocmd BufEnter * if tabpagenr('$') == 1 && winnr('$') == 1 && exists('b:NERDTree') && b:NERDTree.isTabTree() | quit | endif
+" Close current tab if NERDTree is the only windo remaining
+autocmd BufEnter * if winnr('$') == 1 && exists('b:NERDTree') && b:NERDTree.isTabTree() | tabclose | endif
 " Open the existing NERDTree on each new tab.
 autocmd BufWinEnter * if getcmdwintype() == '' | silent NERDTreeMirror | endif
 "

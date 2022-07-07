@@ -17,6 +17,7 @@ This repo is for syncing my own Vim setup between different devices.
 2. codedark
     colorscheme codedark
     set t_ut=
+    If current tab color is difficult to see, change TabLinSel to s:cdGray will solve the problem
 
 ## Coc Install guide
 1. Install nodejs 
