@@ -17,7 +17,7 @@ set expandtab
 colorscheme codedark
 set number
 set mouse=a
-set so=15 "scrolloff
+set so=10 "scrolloff
 set path+=**
 syntax on
 set autoindent
@@ -149,4 +149,3 @@ nmap <leader>rn <Plug>(coc-rename)
 " Map enter to indent correctly
 inoremap <silent><expr> <cr> pumvisible() ? coc#_select_confirm()
 				\: "\<C-g>u\<CR>\<c-r>=coc#on_enter()\<CR>"
-
