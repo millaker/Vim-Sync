@@ -1,7 +1,7 @@
 "PlugIn
 call plug#begin()
 Plug 'preservim/NERDTree'
-"Plug 'millaker/auto-pairs'
+Plug 'millaker/auto-pairs'
 Plug 'tomasiser/vim-code-dark'
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
 Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
@@ -64,6 +64,15 @@ nnoremap smv :w<Enter>:source $MYVIMRC<Enter>
 
 "Open terminal 
 nnoremap <C-j> :bo term<CR>
+
+"Copy selected text back to mac (Non-generic, only for mac)
+nmap yr :call CopyTextToRemote()<CR>
+
+function! CopyTextToRemote()
+    let cliptext=getreg("+",0,1)
+    call writefile(cliptext, '/tmp/clip.temp')
+    !ssh jacob-mac pbcopy < /tmp/clip.temp
+endfunction
 
 "---------------------Keymappings -- VisualMode-------------------------------
 vnoremap H 0
@@ -149,3 +158,5 @@ nmap <leader>rn <Plug>(coc-rename)
 " Map enter to indent correctly
 inoremap <silent><expr> <cr> pumvisible() ? coc#_select_confirm()
 				\: "\<C-g>u\<CR>\<c-r>=coc#on_enter()\<CR>"
+
+
