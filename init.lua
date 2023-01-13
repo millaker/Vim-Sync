@@ -30,10 +30,15 @@ require('packer').startup(function(use)
             'williamboman/mason-lspconfig.nvim',
             -- Useful status updates for LSP
             'j-hui/fidget.nvim',
-
             -- Additional lua configuration, makes nvim stuff amazing
             'folke/neodev.nvim',
         },
+    }
+
+    -- Autocompletion
+    use {
+        'hrsh7th/nvim-cmp',
+        requires = {'hrsh7th/cmp-nvim-lsp', 'L3MON4D3/LuaSnip', 'saadparwaiz1/cmp_luasnip'},
     }
 
     -- treesitter
@@ -65,7 +70,12 @@ set.expandtab = true
 set.autoindent = true
 set.updatetime = 250
 set.signcolumn = 'number'
+set.mouse = 'a'
+set.so = 10
 vim.g.leader = " "
+require('onedark').setup{
+    style = 'warmer'
+}
 require('onedark').load()
 
 -- Basic key mappings
@@ -143,10 +153,8 @@ end
 local servers = {
   clangd = {},
   -- gopls = {},
-  pyright = {},
   rust_analyzer = {},
   -- tsserver = {},
-
   sumneko_lua = {
     Lua = {
       workspace = { checkThirdParty = false },
@@ -155,11 +163,19 @@ local servers = {
   },
 }
 
+--setup neovim lua configuration
+require('neodev').setup()
+
+--nvim cmp additonal completion capabilities
+local capabilities = vim.lsp.protocol.make_client_capabilities()
+capabilities = require('cmp_nvim_lsp').default_capabilities(capabilities)
+
+
 -- Setup mason so it can manage external tooling
 require('mason').setup()
 
 -- Ensure the servers above are installed
-local mason_lspconfig = require 'mason-lspconfig'
+local mason_lspconfig = require('mason-lspconfig')
 
 mason_lspconfig.setup {
   ensure_installed = vim.tbl_keys(servers),
@@ -177,3 +193,46 @@ mason_lspconfig.setup_handlers {
 
 -- Turn on lsp status information
 require('fidget').setup()
+
+-- nvim-cmp setup
+local cmp = require 'cmp'
+local luasnip = require 'luasnip'
+
+cmp.setup {
+  snippet = {
+    expand = function(args)
+      luasnip.lsp_expand(args.body)
+    end,
+  },
+  mapping = cmp.mapping.preset.insert {
+    ['<C-d>'] = cmp.mapping.scroll_docs(-4),
+    ['<C-f>'] = cmp.mapping.scroll_docs(4),
+    ['<C-Space>'] = cmp.mapping.complete(),
+    ['<CR>'] = cmp.mapping.confirm {
+      behavior = cmp.ConfirmBehavior.Replace,
+      select = true,
+    },
+    ['<Tab>'] = cmp.mapping(function(fallback)
+      if cmp.visible() then
+        cmp.select_next_item()
+      elseif luasnip.expand_or_jumpable() then
+        luasnip.expand_or_jump()
+      else
+        fallback()
+      end
+    end, { 'i', 's' }),
+    ['<S-Tab>'] = cmp.mapping(function(fallback)
+      if cmp.visible() then
+        cmp.select_prev_item()
+      elseif luasnip.jumpable(-1) then
+        luasnip.jump(-1)
+      else
+        fallback()
+      end
+    end, { 'i', 's' }),
+  },
+  sources = {
+    { name = 'nvim_lsp' },
+    { name = 'luasnip' },
+  },
+}
